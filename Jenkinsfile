@@ -20,11 +20,32 @@
 
 // }
 
+// node {
+
+//     stage('Install Dependency') {
+//         dir('src') {
+//             sh 'composer install'
+//         }
+//     }
+
+//     stage('Prepare Laravel') {
+//         dir('src') {
+//             sh 'cp .env.example .env || true'
+//             sh 'php artisan key:generate || true'
+//         }
+//     }
+
+// }
+
 node {
+
+    stage('Checkout Code') {
+        checkout scm
+    }
 
     stage('Install Dependency') {
         dir('src') {
-            sh 'composer install'
+            sh 'composer install --no-interaction --prefer-dist --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml'
         }
     }
 
@@ -32,6 +53,19 @@ node {
         dir('src') {
             sh 'cp .env.example .env || true'
             sh 'php artisan key:generate || true'
+        }
+    }
+
+    stage('Set Permission') {
+        dir('src') {
+            sh 'chmod -R 777 storage || true'
+            sh 'chmod -R 777 bootstrap/cache || true'
+        }
+    }
+
+    stage('Laravel Check') {
+        dir('src') {
+            sh 'php artisan --version'
         }
     }
 
