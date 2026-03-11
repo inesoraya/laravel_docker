@@ -45,7 +45,7 @@ node {
 
     stage('Install Dependency') {
         dir('src') {
-            sh 'composer install --no-interaction --prefer-dist --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml --ignore-platform-req=ext-xmlwriter'
+            sh 'composer install --no-interaction --prefer-dist --no-scripts'
         }
     }
 
@@ -53,13 +53,6 @@ node {
         dir('src') {
             sh 'cp .env.example .env || true'
             sh 'php artisan key:generate || true'
-        }
-    }
-
-    stage('Set Permission') {
-        dir('src') {
-            sh 'chmod -R 777 storage || true'
-            sh 'chmod -R 777 bootstrap/cache || true'
         }
     }
 
