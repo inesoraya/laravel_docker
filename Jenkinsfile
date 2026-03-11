@@ -22,7 +22,8 @@
 
 node {
     stage('Install Dependency') {
-        sh 'composer install'
+        dir('src') {
+            sh 'composer install'
     }
 
     stage('Prepare Laravel') {
