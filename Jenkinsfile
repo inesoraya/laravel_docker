@@ -45,7 +45,7 @@ node {
 
     stage('Install Dependency') {
         dir('src') {
-            sh 'composer install --no-interaction --prefer-dist --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml'
+            sh 'composer install --no-interaction --prefer-dist --ignore-platform-req=ext-dom --ignore-platform-req=ext-xml --ignore-platform-req=ext-xmlwriter'
         }
     }
 
