@@ -21,13 +21,18 @@
 // }
 
 node {
+
     stage('Install Dependency') {
         dir('src') {
             sh 'composer install'
+        }
     }
 
     stage('Prepare Laravel') {
-        sh 'cp .env.example .env || true'
-        sh 'php artisan key:generate || true'
+        dir('src') {
+            sh 'cp .env.example .env || true'
+            sh 'php artisan key:generate || true'
+        }
     }
+
 }
